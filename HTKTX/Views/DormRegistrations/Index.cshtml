@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HTKTX.Models.DormRegistration>
+
+@{
+    ViewData["Title"] = "Danh sách đơn đăng ký";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<h2 class="mb-4"><i class="fas fa-file-alt me-2"></i>Danh sách đơn đăng ký</h2>
+
+<table class="table table-bordered table-hover shadow-sm bg-white">
+    <thead class="table-primary text-center">
+        <tr>
+            <th><i class="fas fa-user"></i> Họ tên</th>
+            <th><i class="fas fa-id-card"></i> CCCD</th>
+            <th><i class="fas fa-door-open"></i> Phòng</th>
+            <th><i class="fas fa-tags"></i> Loại phòng</th>
+            <th><i class="fas fa-calendar-alt"></i> Ngày đăng ký</th>
+            <th><i class="fas fa-check-circle"></i> Trạng thái</th>
+            <th><i class="fas fa-cog"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td class="align-middle">@item.FullName</td>
+                    <td class="align-middle">@item.CCCD</td>
+                    <td class="align-middle">@item.RoomNumber</td>
+                    <td class="align-middle">@item.RoomType?.Name</td>
+                    <td class="align-middle">@item.RegisterDate.ToString("dd/MM/yyyy")</td>
+                    <td class="align-middle text-center">
+                    @if (item.IsApproved)
+                    {
+                                <span class="badge bg-success"><i class="fas fa-check me-1"></i>Đã duyệt</span>
+                    }
+                    else
+                    {
+                                <span class="badge bg-warning text-dark"><i class="fas fa-hourglass-half me-1"></i>Chưa duyệt</span>
+                    }
+                    </td>
+                    <td class="align-middle text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm me-1" title="Xem chi tiết">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    @if (!item.IsApproved)
+                    {
+                                <form asp-action="Approve" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-outline-success btn-sm" title="Duyệt đơn">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                    }
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

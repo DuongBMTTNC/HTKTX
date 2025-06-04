@@ -1,0 +1,39 @@
+﻿@model HTKTX.Models.Room
+
+@{
+    ViewData["Title"] = "Thêm phòng";
+}
+
+<div class="container py-4" style="max-width: 500px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+    <h2 class="mb-4 text-primary"><i class="fas fa-door-open me-2"></i>Thêm phòng</h2>
+
+    <form asp-action="Create" novalidate>
+        <div class="mb-3">
+            <label asp-for="RoomNumber" class="form-label"></label>
+            <input asp-for="RoomNumber" class="form-control" placeholder="Nhập số phòng" />
+            <span asp-validation-for="RoomNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Gender" class="form-label"></label>
+            <select asp-for="Gender" class="form-select">
+                <option value="">-- Chọn giới tính --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="RoomTypeId" class="form-label">Loại phòng</label>
+            <select asp-for="RoomTypeId" class="form-select" asp-items="ViewBag.RoomTypes">
+                <option value="">-- Chọn loại phòng --</option>
+            </select>
+            <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            <i class="fas fa-save me-1"></i> Lưu
+        </button>
+    </form>
+</div>

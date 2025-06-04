@@ -1,0 +1,219 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<style>
+    body {
+        background-color: #e0f0ff;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: #1e1e2f;
+        color: white;
+        transition: all 0.3s;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .sidebar.collapsed {
+        width: 80px;
+    }
+
+    .sidebar .nav-link {
+        color: #ccc;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+    }
+
+    .sidebar .nav-link:hover {
+        background-color: #2c2c3c;
+        color: white;
+    }
+
+    .sidebar .nav-link i {
+        font-size: 1.2rem;
+    }
+
+    .sidebar .nav-link span {
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .sidebar.collapsed .nav-link span {
+        opacity: 0;
+        transform: translateX(-10px);
+        pointer-events: none;
+    }
+
+    .content-area {
+        margin-left: 250px;
+        transition: all 0.3s;
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .content-area.full-width {
+        margin-left: 80px;
+    }
+
+    .sidebar-toggle {
+        position: absolute;
+        top: 10px;
+        right: -25px;
+        background-color: #1e1e2f;
+        border: none;
+        color: white;
+        padding: 6px 8px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .sidebar-footer {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        padding: 10px;
+        color: #aaa;
+        font-size: 0.875rem;
+    }
+
+    .tooltip-custom {
+        position: absolute;
+        background-color: #000;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        display: none;
+        white-space: nowrap;
+    }
+</style>
+
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <button class="sidebar-toggle" id="toggleSidebar">
+            <i class="bi bi-list"></i>
+        </button>
+        <h5 class="p-3 mb-0"><i class="bi bi-kanban"></i> <span class="sidebar-label">Hệ thống KTX</span></h5>
+
+        <div class="nav flex-column px-2 mt-3">
+            <a asp-controller="Rooms" asp-action="Index" class="nav-link" data-title="Quản lý phòng">
+                <i class="bi bi-door-open"></i> <span>Quản lý phòng</span>
+            </a>
+            <a asp-controller="RoomTypes" asp-action="Index" class="nav-link" data-title="Loại phòng">
+                <i class="bi bi-tags"></i> <span>Loại phòng</span>
+            </a>
+            <a asp-controller="StudentProfiles" asp-action="Index" class="nav-link" data-title="Sinh viên">
+                <i class="bi bi-people"></i> <span>Sinh viên</span>
+            </a>
+            <a asp-controller="DormRegistrations" asp-action="Index" class="nav-link" data-title="Duyệt đơn">
+                <i class="bi bi-clipboard-check"></i> <span>Duyệt đơn</span>
+            </a>
+            <a asp-controller="UserManagement" asp-action="Index" class="nav-link" data-title="Tài khoản">
+                <i class="bi bi-person-gear"></i> <span>Tài khoản</span>
+            </a>
+            <a asp-controller="WaterElectricBills" asp-action="Index" class="nav-link" data-title="Hóa đơn">
+                <i class="bi bi-lightning"></i> <span>Hóa đơn</span>
+            </a>
+            <div class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#requestSubmenu" aria-expanded="false" aria-controls="requestSubmenu" style="cursor: pointer;">
+                <i class="bi bi-question-circle"></i> <span>Yêu cầu</span>
+            </div>
+                <div class="collapse" id="requestSubmenu">
+                    <div class="nav flex-column ms-4">
+                        <a asp-controller="RepairRequests" asp-action="Index" class="nav-link">
+                            <i class="bi bi-tools"></i> <span>Sửa chữa</span>
+                        </a>
+                        <a asp-controller="RoomChangeRequests" asp-action="AdminIndex" class="nav-link">
+                            <i class="bi bi-arrow-left-right"></i> <span>Đổi phòng</span>
+                        </a>
+                    </div>
+                </div>
+            <a asp-controller="Notifications" asp-action="AdminIndex" class="nav-link">
+                <i class="bi bi-bell-fill"></i> <span>Danh sách thông báo</span>
+            </a>
+            <a asp-controller="Posts" asp-action="Index" class="nav-link">
+                <i class="bi bi-chat-dots"></i> <span>Tương tác</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer text-center">
+            <i class="bi bi-person-circle"></i> Admin
+        </div>
+    </div>
+
+    <!-- Main Content -->
+   <!-- Main Content -->
+<div class="content-area" id="contentArea">
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Chào mừng đến với hệ thống quản lý ký túc xá</h2>
+        <p class="text-center text-muted mb-5">Chọn chức năng để thao tác nhanh</p>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+            <!-- Tạo thông báo -->
+            <div class="col">
+                <a asp-controller="Notifications" asp-action="CreateForStudents" class="text-decoration-none">
+                    <div class="card text-center shadow-sm h-100 hover-shadow border-0">
+                        <div class="card-body">
+                            <i class="bi bi-bell display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Tạo thông báo</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Thêm hóa đơn điện nước -->
+            <div class="col">
+                <a asp-controller="WaterElectricBills" asp-action="Create" class="text-decoration-none">
+                    <div class="card text-center shadow-sm h-100 hover-shadow border-0">
+                        <div class="card-body">
+                            <i class="bi bi-lightning-charge display-4 text-warning mb-3"></i>
+                            <h5 class="card-title">Thêm hóa đơn điện nước</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Xem yêu cầu sinh viên -->
+            <div class="col">
+                <a asp-controller="RepairRequests" asp-action="Index" class="text-decoration-none">
+                    <div class="card text-center shadow-sm h-100 hover-shadow border-0">
+                        <div class="card-body">
+                            <i class="bi bi-question-circle display-4 text-info mb-3"></i>
+                            <h5 class="card-title">Yêu cầu sinh viên</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Duyệt đổi phòng -->
+            <div class="col">
+                <a asp-controller="RoomChangeRequests" asp-action="AdminIndex" class="text-decoration-none">
+                    <div class="card text-center shadow-sm h-100 hover-shadow border-0">
+                        <div class="card-body">
+                            <i class="bi bi-arrow-left-right display-4 text-success mb-3"></i>
+                            <h5 class="card-title">Duyệt đổi phòng</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const sidebar = document.getElementById("sidebar");
+    const contentArea = document.getElementById("contentArea");
+    const toggleBtn = document.getElementById("toggleSidebar");
+
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("collapsed");
+        contentArea.classList.toggle("full-width");
+    });
+</script>
+

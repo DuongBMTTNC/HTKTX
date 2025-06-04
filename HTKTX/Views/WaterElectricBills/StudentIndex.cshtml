@@ -1,0 +1,32 @@
+﻿@model IEnumerable<HTKTX.Models.WaterElectricBill>
+
+@{
+    ViewData["Title"] = "Hóa đơn điện nước";
+}
+
+<h2>Hóa đơn phòng @Model.FirstOrDefault()?.RoomNumber</h2>
+
+<div class="row">
+    @foreach (var bill in Model)
+    {
+        var electricityUsed = bill.ElectricityEnd - bill.ElectricityStart;
+        var waterUsed = bill.WaterEnd - bill.WaterStart;
+        var electricityCost = electricityUsed * bill.ElectricityTotal;
+        var waterCost = waterUsed * bill.WaterTotal;
+        var total = electricityCost + waterCost;
+        var isPaid = bill.IsPaid ? "Đã thanh toán" : "Chưa thanh toán";
+        var cardColor = bill.IsPaid ? "bg-success text-white" : "bg-warning";
+
+        <div class="col-md-4 mb-3">
+            <div class="card @cardColor shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Tháng: @bill.Month/@bill.Year</h5>
+                    <p class="card-text">Số phòng: <strong>@bill.RoomNumber</strong></p>
+                    <p class="card-text">Tổng tiền: <strong>@bill.Total VNĐ</strong></p>
+                    <p class="card-text">Tình trạng: <strong>@isPaid</strong></p>
+                    <a asp-action="StudentDetails" asp-route-id="@bill.Id" class="btn btn-light">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

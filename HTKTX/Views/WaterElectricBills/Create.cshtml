@@ -1,0 +1,87 @@
+﻿@model HTKTX.Models.WaterElectricBill
+
+@{
+    ViewData["Title"] = "Tạo Hóa đơn Mới";
+}
+
+<h1>Tạo Hóa đơn Mới</h1>
+
+<h4>Thông tin hóa đơn Điện Nước</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+             <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label"></label>
+                <select asp-for="RoomNumber" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Rooms, "RoomNumber", "RoomNumber"))">
+                    <option value="">Chọn số phòng</option>
+                </select>
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Month" class="control-label"></label>
+                <input asp-for="Month" class="form-control" />
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ElectricityStart" class="control-label">Chỉ số điện đầu</label>
+                <input asp-for="ElectricityStart" class="form-control" />
+                <span asp-validation-for="ElectricityStart" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ElectricityEnd" class="control-label">Chỉ số điện cuối</label>
+                <input asp-for="ElectricityEnd" class="form-control" />
+                <span asp-validation-for="ElectricityEnd" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="WaterStart" class="control-label">Chỉ số nước nước</label>
+                <input asp-for="WaterStart" class="form-control" />
+                <span asp-validation-for="WaterStart" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="WaterEnd" class="control-label">Chỉ số nước cuối</label>
+                <input asp-for="WaterEnd" class="form-control" />
+                <span asp-validation-for="WaterEnd" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ElectricityUnitPrice" class="control-label">Đơn giá điện</label>
+                <input asp-for="ElectricityUnitPrice" class="form-control" />
+                <span asp-validation-for="ElectricityUnitPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="WaterUnitPrice" class="control-label">Đơn giá nước</label>
+                <input asp-for="WaterUnitPrice" class="form-control" />
+                <span asp-validation-for="WaterUnitPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Tạo Mới" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Quay lại danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

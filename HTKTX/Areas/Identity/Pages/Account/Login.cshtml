@@ -1,0 +1,59 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<!-- Font Awesome để dùng icon -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<h1 class="mb-4 text-center"><i class="fas fa-building-user me-2"></i>@ViewData["Title"]</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <section class="border p-4 rounded shadow-sm bg-white">
+            <form id="account" method="post" novalidate>
+                <h4 class="mb-3"><i class="fas fa-user-lock me-1"></i>Đăng nhập bằng tài khoản nội bộ</h4>
+                <hr />
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" aria-required="true" />
+                    <label asp-for="Input.Email"><i class="fas fa-envelope me-1"></i> Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Mật khẩu" aria-required="true" />
+                    <label asp-for="Input.Password"><i class="fas fa-lock me-1"></i> Mật khẩu</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" type="checkbox" id="rememberMeCheck" />
+                    <label class="form-check-label" asp-for="Input.RememberMe" for="rememberMeCheck">
+                        <i class="fas fa-clock me-1"></i>@Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+
+                <button id="login-submit" type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
+                </button>
+
+                <div class="d-flex flex-column gap-2">
+                    <a id="forgot-password" asp-page="./ForgotPassword" class="text-decoration-none">
+                        <i class="fas fa-key me-1"></i> Quên mật khẩu?
+                    </a>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

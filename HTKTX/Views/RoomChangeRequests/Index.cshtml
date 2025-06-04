@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HTKTX.Models.RoomChangeRequest>
+@{
+    ViewData["Title"] = "Danh sách yêu cầu đổi phòng";
+}
+
+<h2 class="mb-4">Danh sách yêu cầu đổi phòng của bạn</h2>
+<a asp-action="Create" class="btn btn-primary">Yeu cau doi phong</a>
+@if (Model.Any())
+{
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Phòng hiện tại</th>
+                    <th>Phòng mong muốn</th>
+                    <th>Ngày yêu cầu</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var request in Model)
+            {
+                        <tr>
+                            <td>@request.CurrentRoomNumber</td>
+                            <td>@request.DesiredRoomNumber</td>
+                            <td>@request.RequestedAt.ToString("dd/MM/yyyy")</td>
+                            <td>
+                        @if (request.IsApproved)
+                        {
+                                        <span class="text-success">Đã duyệt</span>
+                        }
+                        else
+                        {
+                                        <span class="text-warning">Chờ duyệt</span>
+                        }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@request.Id" class="btn btn-sm btn-outline-info">Chi tiết</a>
+                            </td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
+else
+{
+        <div class="alert alert-info">
+            Bạn chưa có yêu cầu đổi phòng nào.
+        </div>
+}

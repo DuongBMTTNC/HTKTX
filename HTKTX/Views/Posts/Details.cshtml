@@ -1,0 +1,47 @@
+﻿@model HTKTX.Models.Post
+
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Chi tiết bài đăng";
+    var currentUserId = UserManager.GetUserId(User);
+    var isLiked = Model.Likes?.Any(l => l.UserId == currentUserId) ?? false;
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h3>@Model.Title</h3>
+        <p class="text-muted">Đăng bởi: @Model.User?.UserName - @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+                <img src="@Model.ImagePath" class="img-fluid mb-3" alt="Ảnh bài đăng" />
+        }
+
+        <p>@Model.Content</p>
+
+        
+    </div>
+</div>
+<h4>Bình luận</h4>
+@foreach (var comment in Model.Comments)
+{
+                    <div class="alert alert-secondary">
+                        <p>@comment.Content</p>
+                        <small class="text-muted">Đăng bởi: @comment.User.UserName vào lúc @comment.CreatedAt</small>
+                    </div>
+}
+    </div>
+
+
+
+<h5>Viết bình luận</h5>
+<form asp-controller="Posts" asp-action="AddComment" method="post">
+    <input type="hidden" name="PostId" value="@Model.Id" />
+    <div class="form-group mb-2">
+        <textarea name="Content" class="form-control" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+</form>

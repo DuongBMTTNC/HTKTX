@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HTKTX.Models.StudentProfile>
+
+@{
+    ViewData["Title"] = "Danh sách sinh viên";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<h2 class="mb-4"><i class="fas fa-users me-2"></i>Danh sách sinh viên</h2>
+
+<table class="table table-bordered table-hover shadow bg-white">
+    <thead class="table-primary text-center">
+        <tr>
+            <th><i class="fas fa-id-card"></i> CCCD</th>
+            <th><i class="fas fa-user"></i> Họ tên</th>
+            <th><i class="fas fa-venus-mars"></i> Giới tính</th>
+            <th><i class="fas fa-envelope"></i> Email</th>
+            <th><i class="fas fa-phone"></i> SĐT</th>
+            <th><i class="fas fa-calendar"></i> Ngày sinh</th>
+            <th><i class="fas fa-door-open"></i> Phòng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+                <tr>
+                    <td class="align-middle">@student.CCCD</td>
+                    <td class="align-middle">@student.FullName</td>
+                    <td class="align-middle">@student.Gender</td>
+                    <td class="align-middle">@student.Email</td>
+                    <td class="align-middle">@student.Phone</td>
+                    <td class="align-middle">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td class="align-middle">
+                    @(!string.IsNullOrEmpty(student.RoomNumber) ? student.RoomNumber : "<span class=\"text-muted\">Chưa xếp</span>")
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

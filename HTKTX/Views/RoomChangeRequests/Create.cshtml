@@ -1,0 +1,22 @@
+﻿@model HTKTX.Models.RoomChangeRequest
+@{
+    ViewData["Title"] = "Yêu cầu đổi phòng";
+    var availableRooms = ViewData["AvailableRooms"] as List<Room>;
+}
+
+<h2>Yêu cầu đổi phòng</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Phòng hiện tại</label>
+        <input class="form-control" value="@ViewBag.CurrentRoomNumber" readonly />
+    </div>
+
+   <select asp-for="DesiredRoomNumber" asp-items="ViewBag.Rooms" class="form-select"></select>
+   <div class="mb-3">
+    <label asp-for="Reason" class="form-label"></label>
+    <textarea asp-for="Reason" class="form-control"></textarea>
+    <span asp-validation-for="Reason" class="text-danger"></span>
+</div>
+    <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+</form>

@@ -1,0 +1,32 @@
+﻿@model HTKTX.Models.DormRegistration
+
+<h2>Chi tiết đơn đăng ký</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Họ tên</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+
+    <dt class="col-sm-3">CCCD</dt>
+    <dd class="col-sm-9">@Model.CCCD</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Phòng</dt>
+    <dd class="col-sm-9">@Model.RoomNumber</dd>
+
+    <dt class="col-sm-3">Loại phòng</dt>
+    <dd class="col-sm-9">@Model.RoomType?.Name</dd>
+
+    <dt class="col-sm-3">Ảnh CCCD mặt trước</dt>
+    <dd class="col-sm-9">
+        <img src="@Model.CCCDFrontImagePath" alt="CCCD Mặt trước" width="300" />
+    </dd>
+
+    <dt class="col-sm-3">Ảnh CCCD mặt sau</dt>
+    <dd class="col-sm-9">
+        <img src="@Model.CCCDBackImagePath" alt="CCCD Mặt sau" width="300" />
+    </dd>
+</dl>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>

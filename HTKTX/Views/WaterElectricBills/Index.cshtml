@@ -1,0 +1,33 @@
+﻿@model IEnumerable<HTKTX.Models.WaterElectricBill>
+@{
+    ViewData["Title"] = "Danh sách hóa đơn điện nước";
+}
+
+
+
+<h2 class="mb-4">Danh sách hóa đơn điện nước</h2>
+
+
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Phòng</th>
+            <th>Tháng/Năm</th>
+            <th>Tổng tiền (VNĐ)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bill in Model)
+        {
+                <tr>
+                    <td>@bill.RoomNumber</td>
+                    <td>@bill.Month/@bill.Year</td>
+                    <td>@bill.Total.ToString("N0")</td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Tạo hóa đơn mới</a>
+

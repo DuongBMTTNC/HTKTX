@@ -1,0 +1,47 @@
+﻿@model HTKTX.Models.PostViewModel
+
+<h2>Đăng bài mới</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h2 class="mb-0"><i class="bi bi-building"></i> Đăng ký Ký túc xá</h2>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="content" class="form-label">content</label>
+                        <input asp-for="content" class="form-control shadow-sm" />
+                        <span asp-validation-for="content" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="title" class="form-label">title</label>
+                        <input asp-for="title" class="form-control shadow-sm" />
+                        <span asp-validation-for="title" class="text-danger"></span>
+                    </div>
+                </div>
+
+                 <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="image" class="form-label">Ảnh CCCD Mặt Sau</label>
+                        <input asp-for="image" type="file" accept="image/*" class="form-control shadow-sm" />
+                        <span asp-validation-for="image" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-success btn-lg px-4 shadow">
+                        <i class="bi bi-send-check"></i> đăng
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

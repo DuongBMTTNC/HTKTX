@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HTKTX.Models.Post>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Bài đăng";
+}
+
+<h2 class="mb-4">Bài đăng</h2>
+
+<a asp-action="Create" class="btn btn-success mb-4">+ Đăng bài mới</a>
+
+@foreach (var item in Model)
+{
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">@item.Title</h4>
+                <p class="card-text">@item.Content</p>
+
+            @if (!string.IsNullOrEmpty(item.ImagePath))
+            {
+                        <img src="@item.ImagePath" alt="Hình bài đăng" class="img-fluid rounded mt-3 mb-2" style="max-height: 300px;" />
+            }
+
+                <p class="text-muted">
+                    Đăng bởi: <strong>@(item.User?.UserName ?? "Ẩn danh")</strong> | 
+                @item.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                </p>
+
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">Xem</a>
+
+            @if (item.UserId == UserManager.GetUserId(User))
+            {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning me-2">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Xóa</a>
+            }
+            </div>
+        </div>
+}

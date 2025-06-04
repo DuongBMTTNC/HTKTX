@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Trang KTX";
+}
+
+<div class="container text-center mt-5">
+    <h2 class="mb-4"><i class="bi bi-house-door"></i> Chào mừng bạn đến với hệ thống quản lý ký túc xá</h2>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+            <div class="alert alert-success d-inline-block px-4 py-2 mb-4">
+                Xin chào, <strong>@UserManager.GetUserName(User)</strong>!
+            </div>
+
+            <form asp-area="Identity" asp-page="/Account/Logout"
+                  asp-route-returnUrl="@Url.Action("Index", "Home")"
+                  method="post" class="d-inline-block">
+                <button type="submit" class="btn btn-outline-danger btn-lg">
+                    <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                </button>
+            </form>
+    }
+    else
+    {
+            <div class="d-flex justify-content-center gap-4">
+                <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">
+                    <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                </a>
+
+                <a class="btn btn-success btn-lg" asp-controller="DormRegistrations" asp-action="Register">
+                    <i class="bi bi-pencil-square"></i> Đăng ký nội trú
+                </a>
+            </div>
+    }
+</div>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HTKTX.Models.RepairRequest>
+
+@{
+    ViewData["Title"] = "Yêu cầu sửa chữa của tôi";
+}
+
+<h4 class="mb-4"><i class="bi bi-tools"></i> Yêu cầu sửa chữa của tôi</h4>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-outline-primary">
+        <i class="bi bi-plus-circle"></i> Gửi yêu cầu sửa chữa
+    </a>
+</div>
+
+<table class="table table-hover table-bordered shadow-sm">
+    <thead class="table-light">
+        <tr class="text-center">
+            <th>Ngày gửi</th>
+            <th>Mô tả</th>
+            <th>Phòng</th>
+            <th>Ảnh</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td class="text-center">@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Description</td>
+                    <td class="text-center">@item.RoomNumber</td>
+                    <td class="text-center">
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                                <img src="@item.ImagePath" class="img-thumbnail" style="max-width: 100px; max-height: 80px;" />
+                    }
+                    else
+                    {
+                                <span class="text-muted fst-italic">Không có ảnh</span>
+                    }
+                    </td>
+                    <td class="text-center">
+                    @if (item.IsApproved)
+                    {
+                                <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Đã xử lý</span>
+                    }
+                    else
+                    {
+                                <span class="badge bg-warning text-dark"><i class="bi bi-clock-fill"></i> Đang chờ xử lý</span>
+                    }
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

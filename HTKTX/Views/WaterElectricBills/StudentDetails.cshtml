@@ -1,0 +1,48 @@
+﻿@model HTKTX.Models.WaterElectricBill
+
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+}
+
+<h2>Hóa đơn tháng @Model.Month/@Model.Year - Phòng @Model.RoomNumber</h2>
+
+<table class="table">
+    <tr>
+        <th>Chỉ số điện đầu</th><td>@Model.ElectricityStart</td>
+    </tr>
+    <tr>
+        <th>Chỉ số điện cuối</th><td>@Model.ElectricityEnd</td>
+    </tr>
+    <tr>
+        <th>Tiêu thụ điện</th><td>@(Model.ElectricityEnd - Model.ElectricityStart)</td>
+    </tr>
+    <tr>
+        <th>Đơn giá điện</th><td>@Model.ElectricityTotal.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th>Chỉ số nước đầu</th><td>@Model.WaterStart</td>
+    </tr>
+    <tr>
+        <th>Chỉ số nước cuối</th><td>@Model.WaterEnd</td>
+    </tr>
+    <tr>
+        <th>Tiêu thụ nước</th><td>@(Model.WaterEnd - Model.WaterStart)</td>
+    </tr>
+    <tr>
+        <th>Đơn giá nước</th><td>@Model.WaterTotal.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th><strong>Tổng cộng</strong></th>
+        <td>
+            <strong>
+                @Model.Total.ToString("N0") VNĐ
+            </strong>
+        </td>
+    </tr>
+    <tr>
+        <th>Trạng thái</th>
+        <td>@(Model.IsPaid ? "Đã thanh toán" : "Chưa thanh toán")</td>
+    </tr>
+</table>
+
+<a asp-action="StudentIndex" class="btn btn-secondary">Quay lại</a>

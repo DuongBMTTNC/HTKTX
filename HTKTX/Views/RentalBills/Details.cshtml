@@ -1,0 +1,63 @@
+﻿@model RentalBill
+
+<h2>Chi tiết hóa đơn</h2>
+
+<table class="table">
+    <tr>
+        <th>Phòng</th>
+        <td>@Model.RoomNumber</td>
+    </tr>
+    <tr>
+        <th>Loại phòng</th>
+        <td>@Model.RoomType?.Name</td>
+    </tr>
+    <tr>
+        <th>Giá phòng (tháng)</th>
+        <td>@Model.RoomType?.Price.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th>Thời gian ở</th>
+        <td>@(((DateTime?)ViewBag.StartDate)?.ToString("dd/MM/yyyy") ?? "N/A") - @(((DateTime?)ViewBag.EndDate)?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Số tháng</th>
+        <td>
+            @{
+                var start = (DateTime?)ViewBag.StartDate;
+                var end = (DateTime?)ViewBag.EndDate;
+                int months = (start != null && end != null) ? ((end.Value.Year - start.Value.Year) * 12 + end.Value.Month - start.Value.Month + 1) : 0;
+                @months
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Tổng tiền</th>
+        <td>@Model.Amount.ToString("N0") VNĐ</td>
+    </tr>
+    <span class="@(Model.IsPaid ? "text-success" : "text-danger")">
+        @(Model.IsPaid ? "Đã thanh toán" : "Chưa thanh toán")
+            </span>
+</table>
+<div class="card border-primary mb-3">
+    @if (!Model.IsPaid)
+    {
+                <hr />
+                <h5>Hướng dẫn thanh toán</h5>
+                <p>Vui lòng chuyển khoản vào tài khoản ký túc xá như sau:</p>
+                <ul>
+                    <li><strong>Ngân hàng:</strong> ABC Bank</li>
+                    <li><strong>Số tài khoản:</strong> 0123456789</li>
+                    <li><strong>Chủ tài khoản:</strong> Ban quản lý Ký túc xá</li>
+                    <li><strong>Nội dung chuyển khoản:</strong> <span class="text-danger font-weight-bold">@Model.StudentCCCD\_@Model.RoomNumber\_lephi</span></li>
+                </ul>
+
+                <p>Sau khi chuyển khoản, vui lòng thông báo cho ban quản lý để được xác nhận thanh toán.</p>
+    }
+    else
+    {
+                <p class="text-success mt-3"><strong>Hóa đơn này đã được thanh toán.</strong></p>
+    }
+
+        <a asp-action="Index" class="btn btn-secondary mt-3">Quay lại danh sách</a>
+    </div>
+<a asp-action="Index">Quay lại danh sách</a>

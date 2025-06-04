@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RoomType>
+
+<h2 class="mb-4 text-primary"><i class="fas fa-list-ul me-2"></i>Danh sách loại phòng</h2>
+
+<div class="mb-3 d-flex gap-2">
+    
+    <a asp-action="Create" class="btn btn-success" title="Thêm loại phòng"
+       style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; padding:0; border-radius:6px;">
+        <i class="fas fa-plus-circle"></i>
+    </a>
+</div>
+
+<table class="table table-striped table-bordered align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Tên loại</th>
+            <th>Số giường</th>
+            <th>Tiện nghi</th>
+            <th>Giá (VNĐ)</th>
+            <th style="width:110px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.NumberOfBeds</td>
+                    <td>@item.Facilities</td>
+                    <td>@string.Format("{0:N0}", item.Price)</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                           
+                            <a asp-action="Edit" asp-route-id="@item.RoomTypeId" class="btn btn-outline-warning" title="Sửa"
+                               style="width:35px; height:35px; display:inline-flex; align-items:center; justify-content:center; padding:0; border-radius:6px;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            
+                            <a asp-action="Delete" asp-route-id="@item.RoomTypeId" class="btn btn-outline-danger" title="Xóa"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa loại phòng này?');"
+                               style="width:35px; height:35px; display:inline-flex; align-items:center; justify-content:center; padding:0; border-radius:6px;">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

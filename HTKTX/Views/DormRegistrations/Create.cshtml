@@ -1,0 +1,103 @@
+﻿@model HTKTX.Models.DormRegistration
+@{
+    ViewData["Title"] = "Đăng ký nội trú";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Success"] != null)
+{
+        <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="CCCD"></label>
+        <input asp-for="CCCD" class="form-control" />
+        <span asp-validation-for="CCCD" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Gender"></label>
+        <select asp-for="Gender" class="form-control" id="genderSelect">
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RoomTypeId">Loại phòng</label>
+        <select asp-for="RoomTypeId" class="form-control" asp-items="ViewBag.RoomTypes" id="roomTypeSelect">
+            <option value="">-- Chọn loại phòng --</option>
+        </select>
+        <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RoomNumber">Phòng</label>
+        <select asp-for="RoomNumber" class="form-control" id="roomSelect">
+            <option value="">-- Chọn phòng --</option>
+        </select>
+        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Ảnh CCCD mặt trước</label>
+        <input type="file" name="CCCDFrontImage" />
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh CCCD mặt sau</label>
+        <input type="file" name="CCCDBackImage" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartDate" class="control-label">Ngày bắt đầu:</label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label">Ngày kết thúc (tùy chọn):</label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gửi đăng ký</button>
+</form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function loadRooms() {
+                var gender = $('#genderSelect').val();
+                var roomTypeId = $('#roomTypeSelect').val();
+
+                if (gender && roomTypeId) {
+                    $.get('/DormRegistrations/GetAvailableRooms', { gender: gender, roomTypeId: roomTypeId }, function (data) {
+                        var select = $('#roomSelect');
+                        select.empty();
+                        select.append($('<option>').val('').text('-- Chọn phòng --'));
+                        $.each(data, function (i, room) {
+                            select.append($('<option>').val(room.value).text(room.text));
+                        });
+                    });
+                }
+            }
+
+            $('#genderSelect, #roomTypeSelect').on('change', loadRooms);
+        </script>
+}

@@ -1,0 +1,40 @@
+﻿@model HTKTX.Models.StudentProfile
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<h4 class="mb-3"><i class="bi bi-person-circle"></i> Thông tin cá nhân</h4>
+
+<div class="card shadow-sm mx-auto" style="max-width: 500px;">
+    <div class="card-body p-4">
+        <div class="mb-3">
+            <i class="bi bi-card-text me-2"></i> <strong>CCCD:</strong><br />
+            <span class="text-muted">@Model.CCCD</span>
+        </div>
+
+        <div class="mb-3">
+            <i class="bi bi-person me-2"></i> <strong>Họ tên:</strong><br />
+            <span class="text-muted">@Model.FullName</span>
+        </div>
+
+        <div class="mb-3">
+            <i class="bi bi-gender-ambiguous me-2"></i> <strong>Giới tính:</strong><br />
+            <span class="text-muted">@Model.Gender</span>
+        </div>
+
+        <div class="mb-3">
+            <i class="bi bi-envelope me-2"></i> <strong>Email:</strong><br />
+            <span class="text-muted">@Model.Email</span>
+        </div>
+
+        <div class="mb-3">
+            <i class="bi bi-telephone me-2"></i> <strong>SĐT:</strong><br />
+            <span class="text-muted">@Model.Phone</span>
+        </div>
+
+        <div class="mb-2">
+            <i class="bi bi-calendar-event me-2"></i> <strong>Ngày sinh:</strong><br />
+            <span class="text-muted">@Model.DateOfBirth.ToString("dd/MM/yyyy")</span>
+        </div>
+    </div>
+</div>

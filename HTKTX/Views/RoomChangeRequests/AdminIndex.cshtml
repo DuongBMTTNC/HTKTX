@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HTKTX.Models.RoomChangeRequest>
+@{
+    ViewData["Title"] = "Danh sách yêu cầu đổi phòng";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Sinh viên</th>
+            <th>Phòng hiện tại</th>
+            <th>Phòng muốn đổi</th>
+            <th>Lý do</th>
+            <th>Ngày gửi</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model)
+        {
+                <tr>
+                    <td>@(req.Student?.FullName ?? req.StudentCCCD)</td>
+                    <td>@req.CurrentRoomNumber</td>
+                    <td>@req.DesiredRoomNumber</td>
+                    <td>@req.Reason</td>
+                    <td>@req.RequestedAt.ToString("dd/MM/yyyy")</td>
+                    <td>
+                    @if (req.IsApproved)
+                    {
+                                <span class="text-success">Đã duyệt</span>
+                    }
+                    else
+                    {
+                                <span class="text-warning">Chờ duyệt</span>
+                    }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@req.Id" class="btn btn-info btn-sm">Chi tiết</a>
+                    @if (!req.IsApproved)
+                    {
+                                <a asp-action="Approve" asp-route-id="@req.Id" class="btn btn-success btn-sm">Duyệt</a>
+                    }
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

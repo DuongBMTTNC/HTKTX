@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HTKTX.Models.Notification>
+
+@{
+    ViewData["Title"] = "Tất cả thông báo";
+}
+
+<h2 class="mb-4">Tất cả thông báo đã tạo</h2>
+<a class="btn btn-primary" asp-action="CreateForStudents">
+       <i class="bi bi-bell"></i> Tạo thông báo cho sinh vien
+</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Người nhận</th>
+            <th>Nội dung</th>
+            <th>Ngày tạo</th>
+            <th>Đã đọc</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.User?.UserName</td>
+                    <td>@item.Message</td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                    @if (item.IsRead)
+                    {
+                                <span class="badge bg-success">Đã đọc</span>
+                    }
+                    else
+                    {
+                                <span class="badge bg-secondary">Chưa đọc</span>
+                    }
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<RentalBill>
+
+<h2>Hóa đơn tiền phòng của bạn</h2>
+
+<div class="row">
+    @foreach (var bill in Model)
+    {
+            <div class="col-md-4">
+                <div class="card mb-3 border-primary shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        Hóa đơn phòng @bill.RoomNumber
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">@bill.Amount.ToString("N0") VNĐ</h5>
+
+                        <p class="card-text mb-1">
+                            Loại phòng: <strong>@bill.RoomType?.Name</strong>
+                        </p>
+
+                        <p class="card-text mb-1">
+                            Tháng: <strong>@bill.Month/@bill.Year</strong>
+                        </p>
+
+                        <p class="card-text mb-1">
+                            Trạng thái: 
+                            <strong class="@(bill.IsPaid ? "text-success" : "text-danger")">
+                            @(bill.IsPaid ? "Đã thanh toán" : "Chưa thanh toán")
+                            </strong>
+                        </p>
+
+                        <p class="card-text text-muted">
+                            Ngày tạo: @bill.CreatedAt.ToString("dd/MM/yyyy")
+                        </p>
+
+                        <a asp-action="Details" asp-route-id="@bill.Id" class="btn btn-outline-primary btn-sm">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+    }
+</div>

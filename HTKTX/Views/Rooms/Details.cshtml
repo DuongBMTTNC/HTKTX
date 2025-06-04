@@ -1,0 +1,10 @@
+﻿@model HTKTX.Models.Room
+
+<h2>Chi tiết phòng @Model.RoomNumber</h2>
+
+<ul>
+    <li>Giới tính: @Model.Gender</li>
+    <li>Loại phòng: @Model.RoomType?.Name</li>
+    <li>Sức chứa: @Model.RoomType?.NumberOfBeds</li>
+    <li>Hiện có: @Model.CurrentOccupants sinh viên</li>
+</ul>

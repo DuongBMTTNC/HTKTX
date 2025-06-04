@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HTKTX.Models.RepairRequest>
+
+@{
+    ViewData["Title"] = "Yêu cầu sửa chữa";
+}
+
+<h2 class="mb-4">Danh sách yêu cầu sửa chữa</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>CCCD</th>
+            <th>Phòng</th>
+            <th>Mô tả</th>
+            <th>Hình ảnh</th>
+            <th>Ngày gửi</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CCCD</td>
+                <td>@item.RoomNumber</td>
+                <td>@item.Description</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                                  <img src="@item.ImagePath" width="100" />
+                    }
+                    else
+                    {
+                            <span>Không có ảnh</span>
+                    }
+                </td>
+                <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (item.IsApproved)
+                    {
+                            <span class="badge bg-success">Đã xử lý</span>
+                    }
+                    else
+                    {
+                            <span class="badge bg-warning text-dark">Chưa xử lý</span>
+                    }
+                </td>
+                    <td>
+                    @if (!item.IsApproved)
+                    {
+                            <form asp-action="MarkAsApproved" asp-route-id="@item.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-success">Đã xử lý</button>
+                            </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
